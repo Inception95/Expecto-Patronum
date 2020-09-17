@@ -20,3 +20,27 @@ def swapPairs(self, head: ListNode):
     sec.next = first
     cur = cur.next.next # iterate every two nodes
   return dummy.next
+
+
+# Given the root of a binary tree, return the number of uni-value subtrees.
+
+class Solution:
+  def countUnivalSubtrees(self, root: TreeNode) -> int:
+    self.count = 0
+    self.is_valid_part(root, 0)
+    return self.count
+  
+  def is_valid_part(self, node, val):
+    
+    #base case
+    if node is None: return True
+    
+    # check all children
+    if not all([self.is_valid_part(node.left, node.val),
+                self.is_valid_part(node.right, node.val)]): #?https://stackoverflow.com/questions/19389490/how-do-pythons-any-and-all-functions-work
+      return False
+    
+    # if passed the check, count once
+    self.count += 1
+    
+    return node.val == val
